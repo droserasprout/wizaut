@@ -1,6 +1,6 @@
 import asyncio
 from pathlib import Path
-
+ 
 import pywizlight as wl  # type: ignore[import-untyped]
 from fastapi import FastAPI
 from fastapi import Request
