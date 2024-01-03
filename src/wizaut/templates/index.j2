@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wizaut</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" href="static/favicon.ico">
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <meta name="viewport" content="width=device-width,height=device-height"/>
+</head>
+<body>
+    <center><div class="container">
+        <h3>Wizaut</h3>
+        <div class="htmx-indicator" id="indicator">⏳🤔</div>
+
+        <div style="display: flex; justify-content: space-between;">
+            <button
+                hx-get="/lights"
+                hx-swap="innerHTML"
+                hx-target="#lights_list"
+                hx-indicator="#indicator"
+                hx-trigger="click, load"
+            >
+                🔄
+            </button>
+            <button
+                hx-get="/lights/reset"
+                hx-indicator="#indicator"
+                hx-target="#lights_list"
+            >
+                🗑️
+            </button>
+            <button
+                hx-get="/lights/on"
+                hx-indicator="#indicator"
+                hx-target="#lights_list"
+            >
+                🌇
+            </button>
+            <button
+                hx-get="/lights/off"
+                hx-indicator="#indicator"
+                hx-target="#lights_list"
+            >
+                💤
+            </button>
+        </div>
+
+        <div id="lights_list"></div>
+    </div></center>
+
+</body>

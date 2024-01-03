@@ -1,0 +1,19 @@
+<div class="light">
+    <h3>{{ light.name }}</h3>
+
+    🔆<input type="range" min="0" max="255" name="value" value="{{ light.brightness }}"
+        hx-post="/lights/{{ light.ip }}/brightness"
+        hx-trigger="input changed delay:250ms"
+        hx-swap="none"
+        hx-indicator="#indicator"
+    >
+    </br>
+    🔥<input type="range" min="2200" max="6500" name="value" value="{{ light.colortemp }}"
+        hx-post="/lights/{{ light.ip }}/warmth"
+        hx-trigger="input changed delay:250ms"
+        hx-swap="none"
+        hx-indicator="#indicator"
+    >
+
+    <h5>{{ light.ip }} ({{ light.mac}})</h5>
+</div>

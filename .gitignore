@@ -1,0 +1,34 @@
+# Ignore all
+*
+!*/
+
+# Add metadata and build files
+!.gitignore
+!.dockerignore
+!**/Dockerfile
+!**/Makefile
+!**/pyproject.toml
+!**/requirements*
+!**/poetry.lock
+!**/README.md
+!**/.keep
+
+# Add Python code
+!**/*.py
+**/.*_cache
+**/__pycache__
+
+# Add configs and scripts (but not env!)
+!**/*.graphql
+!**/*.json
+!**/*.sql
+!**/*.yaml
+!**/*.yml
+!**/*.j2
+!**/*.env.default
+
+# Docs
+!docs/**
+docs/_build
+
+dipdup_indexer
