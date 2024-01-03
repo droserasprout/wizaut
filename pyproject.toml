@@ -15,6 +15,33 @@ python-multipart = "^0.0.6"
 ruamel-yaml = "^0.18.5"
 uvicorn = "^0.24.0.post1"
 
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.1"
+ruff = "^0.1.11"
+mypy = "^1.8.0"
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+skip-string-normalization = true
+
+[tool.ruff]
+line-length = 120
+ignore = [
+    "E402",  # module level import not at top of file
+    "E501",  # line too long
+    "TCH001", # breaks our runtime Pydantic magic
+]
+target-version = "py311"
+extend-select = ["B", "C4", "FA", "G", "I", "PTH", "Q", "RET", "RUF", "TCH", "UP"]
+flake8-quotes = { inline-quotes = "single", multiline-quotes = "double" }
+isort = { force-single-line = true }
+
+[tool.mypy]
+python_version = "3.11"
+plugins = ["pydantic.mypy"]
+strict = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

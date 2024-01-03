@@ -26,9 +26,3 @@
 !**/*.yml
 !**/*.j2
 !**/*.env.default
-
-# Docs
-!docs/**
-docs/_build
-
-dipdup_indexer
