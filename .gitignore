@@ -13,16 +13,12 @@
 !**/README.md
 !**/.keep
 
+# Static files
+!**/*.j2
+!**/*.ico
+!**/*.css
+
 # Add Python code
-!**/*.py
+!src
 **/.*_cache
 **/__pycache__
-
-# Add configs and scripts (but not env!)
-!**/*.graphql
-!**/*.json
-!**/*.sql
-!**/*.yaml
-!**/*.yml
-!**/*.j2
-!**/*.env.default
