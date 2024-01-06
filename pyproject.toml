@@ -20,6 +20,9 @@ black = "^23.12.1"
 ruff = "^0.1.11"
 mypy = "^1.8.0"
 
+[tool.poetry.scripts]
+wizaut = "wizaut:run"
+
 [tool.black]
 line-length = 120
 target-version = ["py311"]

@@ -20,5 +20,6 @@
 
 # Add Python code
 !src
+!**/*.py
 **/.*_cache
 **/__pycache__
