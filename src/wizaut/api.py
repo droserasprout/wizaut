@@ -1,6 +1,6 @@
 import asyncio
 from pathlib import Path
- 
+
 import pywizlight as wl  # type: ignore[import-untyped]
 from fastapi import FastAPI
 from fastapi import Request
@@ -8,14 +8,12 @@ from fastapi import Response
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
-from ruamel.yaml import YAML
 
-config_path = Path(__file__).parent.parent.parent / 'wizaut.yaml'
-config = YAML().load(config_path.read_text())
+from wizaut.config import WizautConfig
 
+config = WizautConfig.load(Path(__file__).parent.parent.parent / 'wizaut.yaml')
 
-KNOWN_BULBS = {k.replace(':', ''): v for k, v in config['devices'].items()}
+KNOWN_BULBS = {k.replace(':', ''): v for k, v in config.devices.items()}
 
 _discovered_lights: list[wl.wizlight] = []
 
@@ -24,8 +22,8 @@ async def _get_lights() -> list[wl.wizlight]:
     global _discovered_lights
     if not _discovered_lights:
         _discovered_lights = await wl.discovery.discover_lights(
-            broadcast_space=config['broadcast'],
-            wait_time=int(config['timeout']),
+            broadcast_space=config.broadcast,
+            wait_time=int(config.timeout),
         )
     for _light in _discovered_lights:
         await _light.updateState()
@@ -41,10 +39,6 @@ app.mount('/static', StaticFiles(directory=Path(__file__).parent.joinpath('stati
 async def index(request: Request) -> Response:
     data = {'page': 'Home page'}
     return templates.TemplateResponse('index.j2', {'request': request, 'data': data})
-
-
-class System(BaseModel):
-    system_name: str
 
 
 @app.get('/lights', response_class=HTMLResponse)
@@ -110,7 +104,7 @@ async def light_brightness(request: Request) -> None:
 
     light = wl.wizlight(name)
     await light.updateState()
-    timeout = config['timeout']
+    timeout = config.timeout
 
     if value:
         await asyncio.wait_for(light.turn_on(wl.PilotBuilder(brightness=int(value))), timeout)
@@ -125,5 +119,5 @@ async def light_warmth(request: Request) -> None:
 
     light = wl.wizlight(name)
     await light.updateState()
-    timeout = config['timeout']
+    timeout = config.timeout
     await asyncio.wait_for(light.turn_on(wl.PilotBuilder(colortemp=int(value))), timeout)  # type: ignore[arg-type]

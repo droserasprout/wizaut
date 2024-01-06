@@ -22,7 +22,7 @@ USER wizaut
 ENV PATH="/opt/wizaut/bin:$PATH"
 ENV PYTHONPATH="/home/wizaut:/home/wizaut/src:/opt/wizaut/src:/opt/wizaut/lib/python3.11/site-packages:$PYTHONPATH"
 WORKDIR /home/wizaut/
-ENTRYPOINT ["uvicorn", "wizaut.api:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["python", "-m", "wizaut"]
 EXPOSE 8000
 
 COPY --chown=wizaut --from=compile-image /opt/wizaut /opt/wizaut
