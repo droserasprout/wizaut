@@ -1,18 +1,19 @@
 <div class="light">
     <h4>{{ light.name }}</h4>
     <h5>{{ light.ip }} ({{ light.mac}})</h5>
-    <center><input type="range" min="0" max="255" name="value" value="{{ light.brightness }}"
-        hx-post="/lights/{{ light.ip }}/brightness"
-        hx-trigger="input changed delay:250ms"
-        hx-swap="none"
-        hx-indicator="#indicator"
-    ></center>
-    </br>
-    <center><input type="range" min="2200" max="6500" name="value" value="{{ light.colortemp }}"
-        hx-post="/lights/{{ light.ip }}/warmth"
-        hx-trigger="input changed delay:250ms"
-        hx-swap="none"
-        hx-indicator="#indicator"
-    ></center>
+    <center>
+        <input type="range" min="0" max="255" name="value" value="{{ light.brightness }}"
+            hx-post="/lights/{{ light.ip }}/brightness"
+            hx-trigger="input changed delay:250ms"
+            hx-swap="none"
+            hx-indicator="#indicator"
+        >
+        <input type="range" min="2200" max="6500" name="value" value="{{ light.colortemp }}"
+            hx-post="/lights/{{ light.ip }}/warmth"
+            hx-trigger="input changed delay:250ms"
+            hx-swap="none"
+            hx-indicator="#indicator"
+        >
+    </center>
 
 </div>

@@ -85,7 +85,7 @@ h5 {
 input {
     width: 90%;
     display: flex;
-    margin: 0.2em 0 0.2em 0;
+    margin: 1em;
 }
 
 .bi {
