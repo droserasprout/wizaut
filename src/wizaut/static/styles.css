@@ -91,3 +91,17 @@ input {
 .bi {
     margin: 0.5em;
 }
+
+hr {
+    background-color: #ccc;
+    border: none;
+    height: 1px;
+    margin: 0.5em;
+}
+
+.knob {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
