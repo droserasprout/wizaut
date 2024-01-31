@@ -6,7 +6,6 @@ MAKEFLAGS += --no-print-directory
 ##
 PACKAGE=wizaut
 TAG=latest
-COMPOSE=compose.yaml
 
 help:           ## Show this help (default)
 	@grep -Fh "##" $(MAKEFILE_LIST) | grep -Fv grep -F | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -35,12 +34,5 @@ mypy:           ## Lint with mypy
 
 image:          ## Build Docker image
 	docker build . -t ${PACKAGE}:${TAG}
-
-up:             ## Run Compose stack
-	docker-compose -f ${COMPOSE} up -d --build
-	docker-compose -f ${COMPOSE} logs -f
-
-down:           ## Stop Compose stack
-	docker-compose -f ${COMPOSE} down
 
 ##

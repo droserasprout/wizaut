@@ -17,6 +17,7 @@
 !**/*.j2
 !**/*.ico
 !**/*.css
+!**/*.png
 
 # Add Python code
 !src
