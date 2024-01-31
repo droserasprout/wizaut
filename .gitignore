@@ -1,0 +1,26 @@
+# Ignore all
+*
+!*/
+
+# Add metadata and build files
+!.gitignore
+!.dockerignore
+!**/Dockerfile
+!**/Makefile
+!**/pyproject.toml
+!**/requirements*
+!**/poetry.lock
+!**/README.md
+!**/.keep
+
+# Static files
+!**/*.j2
+!**/*.ico
+!**/*.css
+!**/*.png
+
+# Add Python code
+!src
+!**/*.py
+**/.*_cache
+**/__pycache__
