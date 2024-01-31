@@ -19,6 +19,10 @@ format:         ## Format with all tools
 lint:           ## Lint with all tools
 	make ruff mypy
 
+update:		    ## Update all dependencies
+	poetry update
+	poetry export -f requirements.txt --output requirements.txt --without-hashes
+
 ##
 
 black:          ## Format with black
