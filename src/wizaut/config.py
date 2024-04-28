@@ -1,8 +1,16 @@
 from dataclasses import dataclass
 from dataclasses import field
 from pathlib import Path
+from typing import Any
 
 from ruamel.yaml import YAML
+
+
+@dataclass(kw_only=True)
+class Device:
+    name: str | None = None
+    ip: str | None = None
+    mac: str | None = None
 
 
 @dataclass(kw_only=True)
@@ -11,7 +19,7 @@ class WizautConfig:
     port: int = 8001
     broadcast: str = '255.255.255.255'
     timeout: int = 10
-    devices: dict[str, str] = field(default_factory=dict)
+    devices: list[dict[str, Any]] = field(default_factory=list)
 
     @classmethod
     def load(cls, path: Path) -> 'WizautConfig':
@@ -27,3 +35,6 @@ class WizautConfig:
             if path.exists():
                 return cls.load(path)
         return cls()
+
+    def get_devices(self) -> list[Device]:
+        return [Device(**device) for device in self.devices]
