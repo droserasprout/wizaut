@@ -25,7 +25,7 @@
                 hx-indicator="#indicator"
                 style="display: inherit; width: 100%;"
             >
-                {% for value in [2200, 2300, 2400, 2500, 3200, 3860, 45200, 5180, 5840, 6500] %}
+                {% for value in [2200, 2300, 2400, 2500, 2600, 2800, 3200, 3700, 4300, 5000] %}
                     <input type="radio" class="warmth-radio" name="value" value="{{ value }}" {% if value == light.warmth %}checked{% endif %} />
                 {% endfor %}
             </form>
