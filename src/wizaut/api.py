@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from pathlib import Path
 
 import pywizlight as wl  # type: ignore[import-untyped]
@@ -11,6 +12,8 @@ from fastapi.templating import Jinja2Templates
 
 from wizaut.config import WizautConfig
 from wizaut.wiz import WizManager
+
+_logger = logging.getLogger(__name__)
 
 
 def create_app(config: WizautConfig) -> FastAPI:
@@ -27,8 +30,7 @@ def create_app(config: WizautConfig) -> FastAPI:
 
     @app.get('/', response_class=HTMLResponse)
     async def index(request: Request) -> Response:
-        data = {'page': 'Home page'}
-        return templates.TemplateResponse('index.j2', {'request': request, 'data': data})
+        return templates.TemplateResponse('index.j2', {'request': request})
 
     @app.get('/lights', response_class=HTMLResponse)
     async def get_lights(request: Request) -> Response:
@@ -38,7 +40,7 @@ def create_app(config: WizautConfig) -> FastAPI:
         for light in lights:
             if light.ip in (None, 'None'):
                 continue
-            print('updating', light)
+            _logger.info('updating %s', light)
             await light.updateState()
             for device in wiz._devices:
                 if light.mac == device.mac:
