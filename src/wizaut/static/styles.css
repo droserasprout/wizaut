@@ -85,7 +85,6 @@ h5 {
 input {
     width: 90%;
     display: flex;
-    margin: 1em;
 }
 
 .bi {
@@ -104,4 +103,21 @@ hr {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+input.brightness-range {
+    margin: 0.75em;
+}
+
+form.warmth-radios {
+    margin: 0.75em;
+    display: inherit;
+    width: 100%;
+}
+
+label {
+    border-left: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 0.5em;
+    min-width: 2.5em;
 }
