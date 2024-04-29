@@ -14,8 +14,15 @@ port: 8001
 broadcast: 255.255.255.255
 timeout: 10
 devices:
-  d8a011bc75c7: Couch
-  d8a011b87d79: Table
-  d8a011b76c7d: Floor Lamp
-  d8a011be54ab: Bedroom
+  - name: Couch
+    mac: d8:a0:11:bc:75:c7
+  - name: Table
+    mac: d8:a0:11:b8:7d:79
+    ip: 192.168.0.141
+  - name: Floor Lamp
+    mac: d8:a0:11:b7:6c:7d
+    ip: 192.168.0.107
+  - name: Bedroom
+    mac: d8:a0:11:be:54:ab 
+    ip: 192.168.0.162
 ```
