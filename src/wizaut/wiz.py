@@ -1,6 +1,6 @@
-import pywizlight as wl
+import pywizlight as wl  # type: ignore[import-untyped]
 
-from wizaut.config import Device  # type: ignore[import-untyped]
+from wizaut.config import Device
 
 
 class WizManager:
@@ -27,7 +27,7 @@ class WizManager:
             if light.mac == device.mac or light.ip == device.ip:
                 break
         else:
-            device = (Device(),)
+            device = Device()
             self._devices.append(device)
 
         device.name = device.name or light.mac
@@ -60,6 +60,6 @@ class WizManager:
     async def get_lights(self, update: bool = False) -> list[wl.wizlight]:
         if not self._devices:
             await self.discover()
-        elif update:        
+        elif update:
             await self.refresh()
         return self._lights
