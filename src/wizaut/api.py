@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from pathlib import Path
 
 import pywizlight as wl  # type: ignore[import-untyped]
@@ -12,6 +13,8 @@ from fastapi.templating import Jinja2Templates
 from wizaut.config import WizautConfig
 from wizaut.wiz import WizManager
 
+_logger = logging.getLogger(__name__)
+
 
 def create_app(config: WizautConfig) -> FastAPI:
     templates = Jinja2Templates(directory=Path(__file__).parent / 'templates')
@@ -20,24 +23,32 @@ def create_app(config: WizautConfig) -> FastAPI:
     app = FastAPI()
     app.mount('/static', static, name='static')
     wiz = WizManager(
+        devices=config.get_devices(),
         broadcast=config.broadcast,
         timeout=config.timeout,
-        aliases=config.devices,
     )
 
     @app.get('/', response_class=HTMLResponse)
     async def index(request: Request) -> Response:
-        data = {'page': 'Home page'}
-        return templates.TemplateResponse('index.j2', {'request': request, 'data': data})
+        return templates.TemplateResponse('index.j2', {'request': request})
 
     @app.get('/lights', response_class=HTMLResponse)
     async def get_lights(request: Request) -> Response:
         res = []
 
-        lights = await wiz.get_lights()
+        lights = await wiz.get_lights(update=True)
         for light in lights:
+            if light.ip in (None, 'None'):
+                continue
+            _logger.info('updating %s', light)
             await light.updateState()
-            name = wiz._aliases.get(light.mac) or light.mac
+            for device in wiz._devices:
+                if light.mac == device.mac:
+                    name = device.name
+                    break
+            else:
+                name = light.mac
+
             state = light.state.get_state()
             res.append(
                 {
@@ -59,14 +70,14 @@ def create_app(config: WizautConfig) -> FastAPI:
 
     @app.get('/lights/off', response_class=HTMLResponse)
     async def lights_off(request: Request) -> Response:
-        for light in await wiz.get_lights():
-            await light.turn_off()
+        tasks = [light.turn_off() for light in await wiz.get_lights()]
+        await asyncio.wait(tasks, timeout=config.timeout)
         return await get_lights(request)
 
     @app.get('/lights/on', response_class=HTMLResponse)
     async def lights_on(request: Request) -> Response:
-        for light in await wiz.get_lights():
-            await light.turn_on()
+        tasks = [light.turn_on() for light in await wiz.get_lights()]
+        await asyncio.wait(tasks, timeout=config.timeout)
         return await get_lights(request)
 
     @app.get('/lights/{name}/flip', response_class=HTMLResponse)
